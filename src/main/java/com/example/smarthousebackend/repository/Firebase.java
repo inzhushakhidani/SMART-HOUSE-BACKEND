@@ -216,7 +216,7 @@ public class Firebase {
                 }
             }
 
-            if (smartHouse.getDoor() == 1 && settings.getSecurity() == 0) {             
+            if (smartHouse.getDoor() == 1 && settings.getSecurity() == 0) {
                 door(0);
                 if(!doorExecuted) {
                     doorExecuted = true;
