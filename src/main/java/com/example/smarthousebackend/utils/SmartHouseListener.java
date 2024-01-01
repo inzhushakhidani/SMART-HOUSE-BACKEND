@@ -4,6 +4,7 @@ import com.example.smarthousebackend.entity.SmartHouse;
 import com.example.smarthousebackend.entity.SmartHouseList;
 import com.example.smarthousebackend.repository.SmartHouseListRepository;
 import com.example.smarthousebackend.repository.SmartHouseRepository;
+import com.example.smarthousebackend.repository.SoilListRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -14,10 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class HydroponicListener {
+public class SmartHouseListener {
 
     private final SmartHouseListRepository smartHouseListRepository;
     private final SmartHouseRepository smartHouseRepository;
+    private final SoilListRepository soilListRepository;
 
     @Scheduled(fixedRate = 20000)
     public void postUpdate() {
@@ -47,15 +49,25 @@ public class HydroponicListener {
             // ваш существующий код
 
             // Добавим условие для удаления старых данных, если их количество превышает 1000
-            long rowCount = smartHouseListRepository.count();
+            long smartHouseRowCount = smartHouseListRepository.count();
+            long soilRowCount = soilListRepository.count();
             int maxRowCount = 1000;
 
-            if (rowCount > maxRowCount) {
+            if (smartHouseRowCount > maxRowCount) {
                 // Определяем количество записей, которые нужно удалить
-                int deleteCount = (int) (rowCount - maxRowCount);
+                int deleteCount = (int) (smartHouseRowCount - maxRowCount);
 
                 // Удаляем старые записи
                 smartHouseListRepository.deleteOldestRecords(deleteCount);
             }
+            if(soilRowCount > maxRowCount){
+                int deleteCount = (int) (soilRowCount - maxRowCount);
+
+                // Удаляем старые записи
+                soilListRepository.deleteOldestRecords(deleteCount);
+            }
+
+
+
     }
 }
