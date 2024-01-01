@@ -4,13 +4,13 @@ spring:
   jackson:
     time-zone: Asia/Almaty
   jwt:
-    secret-key: ${JWT_SECRET}
+    secret-key: 2B4B6250655368566D5971337336763979244226452948404D635166546A576E
     expiration_time_access: 3600000
     expiration_time_refresh: 3600000000
   datasource:
     url: jdbc:postgresql://roundhouse.proxy.rlwy.net:41217/railway
-    username: ${POSTGRES_USERNAME}
-    password: ${POSTGRES_PASSWORD}
+    username: postgres
+    password: AE1BDFBg5Fac16fBFf55A*bda35cC42c
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
