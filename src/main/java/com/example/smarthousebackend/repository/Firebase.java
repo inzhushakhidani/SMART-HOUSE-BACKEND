@@ -33,6 +33,7 @@ public class Firebase {
     private final MailService mailService;
     private final UserRepository userRepository;
     private final SoilRepository soilRepository;
+    private final SoilListRepository soilListRepository;
 
     public void editSettings(SettingsDto settings){
         DatabaseReference database = FirebaseDatabase.getInstance().getReference("Settings");
@@ -177,6 +178,13 @@ public class Firebase {
                 log.info(soilDto.toString());
                 soilService.save(soilDto);
 
+                SoilList soilList = SoilList.builder()
+                        .flow(soilDto.getFlow())
+                        .moisture(soilDto.getMoisture())
+                        .timestamp(soilDto.getTimestamp())
+                        .totalFlow(soilDto.getTotalFlow())
+                        .updatedAt(new Date()).build();
+                soilListRepository.save(soilList);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
